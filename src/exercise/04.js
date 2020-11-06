@@ -71,19 +71,21 @@ function Game() {
       <>
         {history.map((move, index) => (
           <div style={{marginBottom: 10}}>
-            {(index === 0) === currentStep ? (
-              <button disabled>Go to game start</button>
-            ) : index === 0 ? (
-              <button onClick={() => setCurrentStep(index)}>
-                Go to game start
-              </button>
-            ) : currentStep === index ? (
+            {currentStep === index ? (
               <button disabled>
-                <>{`Go to move # ${index} (current)`}</>
+                {index === 0 ? (
+                  <>Go to game start (current)</>
+                ) : (
+                  <>{`Go to move # ${index} (current)`}</>
+                )}
               </button>
             ) : (
               <button onClick={() => setCurrentStep(index)}>
-                <>{`Go to move # ${index}`}</>
+                {index === 0 ? (
+                  <>Go to game start</>
+                ) : (
+                  <>{`Go to move # ${index}`}</>
+                )}
               </button>
             )}
           </div>
