@@ -59,7 +59,10 @@ function Game() {
       setHistory(historyCopy)
       setCurrentStep(currentStep + 1)
     } else {
-      historyCopy.slice()
+      const newHistory = historyCopy.slice(0, currentStep + 1)
+      newHistory.push(squaresCopy)
+      setHistory(newHistory)
+      setCurrentStep(currentStep + 1)
     }
   }
 
