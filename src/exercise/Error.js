@@ -2,7 +2,7 @@ import React from 'react'
 export class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {hasError: false, error: ''}
+    this.state = {hasError: false, error: false}
   }
 
   static getDerivedStateFromError(error) {
@@ -20,11 +20,7 @@ export class ErrorBoundary extends React.Component {
       // You can render any custom fallback UI
       return (
         <div role="alert">
-          <pre style={{whiteSpace: 'normal'}}>
-            {' '}
-            There was an error: Probably the pokemon you are looking for doesnt
-            exist
-          </pre>
+          <pre style={{whiteSpace: 'normal'}}>{this.state.error.message}</pre>
         </div>
       )
     }

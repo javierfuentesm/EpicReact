@@ -32,7 +32,7 @@ function PokemonInfo({pokemonName}) {
 
   const Pokemon = () => {
     if (state.status === 'rejected') {
-      throw new Error()
+      throw new Error(state.error.message)
     } else if (state.status === 'idle') {
       return 'Submit a Pokemon'
     } else if (state.status === 'pending') {
