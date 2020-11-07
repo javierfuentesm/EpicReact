@@ -1,7 +1,7 @@
 // useState: tic tac toe
 // http://localhost:3000/isolated/exercise/04.js
 
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import {useLocalStorageState} from '../utils'
 
 function Board({onClick, squares}) {
@@ -66,33 +66,24 @@ function Game() {
     }
   }
 
-  function moves() {
-    return (
-      <>
-        {history.map((move, index) => (
-          <div style={{marginBottom: 10}}>
-            {currentStep === index ? (
-              <button disabled>
-                {index === 0 ? (
-                  <>Go to game start (current)</>
-                ) : (
-                  <>{`Go to move # ${index} (current)`}</>
-                )}
-              </button>
-            ) : (
-              <button onClick={() => setCurrentStep(index)}>
-                {index === 0 ? (
-                  <>Go to game start</>
-                ) : (
-                  <>{`Go to move # ${index}`}</>
-                )}
-              </button>
-            )}
-          </div>
-        ))}
-      </>
-    )
-  }
+  const moves = history.map((move, index) => (
+    <div style={{marginBottom: 10}}>
+      {currentStep === index ? (
+        <button disabled>
+          {index === 0 ? (
+            <>Go to game start (current)</>
+          ) : (
+            <>{`Go to move # ${index} (current)`}</>
+          )}
+        </button>
+      ) : (
+        <button onClick={() => setCurrentStep(index)}>
+          {index === 0 ? <>Go to game start</> : <>{`Go to move # ${index}`}</>}
+        </button>
+      )}
+    </div>
+  ))
+
   return (
     <div className="game">
       <div className="game-board">
@@ -103,7 +94,7 @@ function Game() {
       </div>
       <div className="game-info">
         <div>{status}</div>
-        <ol>{moves()}</ol>
+        <ol>{moves}</ol>
       </div>
     </div>
   )
