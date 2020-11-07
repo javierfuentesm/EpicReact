@@ -8,6 +8,7 @@ import {
   PokemonInfoFallback,
   PokemonDataView,
 } from '../pokemon'
+import {ErrorBoundary} from './Error'
 
 function PokemonInfo({pokemonName}) {
   const [state, setState] = useState({
@@ -28,18 +29,23 @@ function PokemonInfo({pokemonName}) {
         })
     }
   }, [pokemonName])
-  if (state.status === 'rejected')
-    return (
-      <div role="alert">
-        There was an error:{' '}
-        <pre style={{whiteSpace: 'normal'}}>{state.error.message}</pre>
-      </div>
-    )
-  if (state.status === 'idle') return 'Submit a Pokemon'
-  if (state.status === 'pending')
-    return <PokemonInfoFallback name={pokemonName} />
-  if (state.status === 'resolved')
-    return <PokemonDataView pokemon={state.pokemon} />
+
+  const Pokemon = () => {
+    if (state.status === 'rejected') {
+      throw new Error()
+    } else if (state.status === 'idle') {
+      return 'Submit a Pokemon'
+    } else if (state.status === 'pending') {
+      return <PokemonInfoFallback name={pokemonName} />
+    } else if (state.status === 'resolved') {
+      return <PokemonDataView pokemon={state.pokemon} />
+    }
+  }
+  return (
+    <ErrorBoundary>
+      <Pokemon />
+    </ErrorBoundary>
+  )
 }
 
 function App() {
