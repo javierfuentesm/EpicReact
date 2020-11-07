@@ -10,7 +10,7 @@ const formatDate = date =>
 function fetchPokemon(name, delay = 1500) {
   const pokemonQuery = `
     query PokemonInfo($name: String) {
-      pokemon(name: $name) {
+      pokemon(name: $name) {  
         id
         number
         name
