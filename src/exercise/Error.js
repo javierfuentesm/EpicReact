@@ -15,6 +15,12 @@ export class ErrorBoundary extends React.Component {
     // logErrorToMyService(error, errorInfo)
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if(prevProps.pokemonName !== this.props.pokemonName){
+      this.setState({hasError: false, error: false})
+    }
+  }
+
   render() {
     if (this.state.hasError) {
       // You can render any custom fallback UI

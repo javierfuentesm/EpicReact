@@ -42,7 +42,7 @@ function PokemonInfo({pokemonName}) {
     }
   }
   return (
-    <ErrorBoundary>
+    <ErrorBoundary pokemonName={pokemonName}>
       <Pokemon />
     </ErrorBoundary>
   )
