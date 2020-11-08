@@ -19,7 +19,7 @@ function PokemonInfo({pokemonName}) {
   })
 
   useEffect(() => {
-    if (pokemonName) {
+    if (pokemonName !== '') {
       setState({...state, status: 'pending'})
       fetchPokemon(pokemonName)
         .then(pokemonData => {
@@ -43,19 +43,7 @@ function PokemonInfo({pokemonName}) {
     }
   }
 
-  function ErrorFallback({error}) {
-    return (
-      <div role="alert">
-        There was an error:{' '}
-        <pre style={{whiteSpace: 'normal'}}>{error.message}</pre>
-      </div>
-    )
-  }
-  return (
-    <ErrorBoundary key={pokemonName}  FallbackComponent={ErrorFallback} >
-      <Pokemon />
-    </ErrorBoundary>
-  )
+  return <Pokemon />
 }
 
 function App() {
@@ -64,13 +52,26 @@ function App() {
   function handleSubmit(newPokemonName) {
     setPokemonName(newPokemonName)
   }
-
+  function ErrorFallback({error, resetErrorBoundary}) {
+    return (
+      <div role="alert">
+        There was an error:{' '}
+        <pre style={{whiteSpace: 'normal'}}>{error.message}</pre>
+        <button onClick={resetErrorBoundary}>Try again</button>
+      </div>
+    )
+  }
   return (
     <div className="pokemon-info-app">
       <PokemonForm pokemonName={pokemonName} onSubmit={handleSubmit} />
       <hr />
       <div className="pokemon-info">
-        <PokemonInfo pokemonName={pokemonName} />
+        <ErrorBoundary
+          onReset={() => setPokemonName('')}
+          FallbackComponent={ErrorFallback}
+        >
+          <PokemonInfo pokemonName={pokemonName} />
+        </ErrorBoundary>
       </div>
     </div>
   )
